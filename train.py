@@ -81,6 +81,7 @@ STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
 predictions = model.predict_generator(
                                       test_generator,
                                       steps = STEP_SIZE_TEST,
+                                      verbose = 1
                                      )
 
 savePredictions(predictions, test_generator.filenames, save_name = 'predictions/{}.csv'.format(model_name))

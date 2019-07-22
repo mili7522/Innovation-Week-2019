@@ -16,9 +16,9 @@ IMAGE_SIZE = modelDefinition.IMAGE_SIZE
 model_path = 'models'
 model_name = model_type
 
-
 model = load_model(os.path.join(model_path, model_name) + '.h5')
 
+test_datagen = modelDefinition.test_datagen
 test_generator = test_datagen.flow_from_directory('/media/mike/Files/Data and Results/innovation-challenge-2019/Test/',
                                                   target_size = (IMAGE_SIZE, IMAGE_SIZE),
                                                   class_mode = None,
@@ -32,6 +32,7 @@ STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
 predictions = model.predict_generator(
                                       test_generator,
                                       steps = STEP_SIZE_TEST,
+                                      verbose = 1
                                      )
 
 savePredictions(predictions, test_generator.filenames, save_name = 'predictions/{}.csv'.format(model_name))
