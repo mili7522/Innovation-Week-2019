@@ -23,7 +23,7 @@ training_examples = 11314
 validation_examples = 2831
 test_examples = 999
 
-EPOCHS = 50
+EPOCHS = 30
 BATCH_SIZE = 16
 
 
@@ -68,7 +68,8 @@ history = model.fit_generator(
                               epochs = EPOCHS,
                               validation_data = validation_generator,
                               validation_steps = STEP_SIZE_VALID,
-                              callbacks = callbacks_list
+                              callbacks = callbacks_list,
+                              class_weight = modelDefinition.class_weight
                              )
 
 

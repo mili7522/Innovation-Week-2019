@@ -8,6 +8,7 @@ from keras.layers import Dense, Flatten, GlobalAveragePooling2D, BatchNormalizat
 from keras import regularizers
 from keras import optimizers
 
+# Balanced (square root) class weights
 
 IMAGE_SIZE = 224
 adam_optimizer_options = {'lr': 0.001, 'beta_1': 0.9, 'beta_2': 0.999}
@@ -59,8 +60,8 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale = 1./255, preprocessing_function = preprocess_input)
 
 
-class_weight = {0: 1,
-                1: 4,
-                2: 4,
-                3: 4,
-                4: 4}
+class_weight = {0: 0.642,
+                1: 1.988,
+                2: 1.328,
+                3: 2.503,
+                4: 3.539}}

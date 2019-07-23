@@ -37,7 +37,7 @@ def build_model():
     base_model.trainable = False
 
     custom_model.compile(optimizer = optimizers.Adam(**adam_optimizer_options),
-                         loss = 'categorical_crossentropy',
+                         loss = 'binary_crossentropy',
                          metrics = ['accuracy']
                         )
 
@@ -59,8 +59,4 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale = 1./255, preprocessing_function = preprocess_input)
 
 
-class_weight = {0: 1,
-                1: 4,
-                2: 4,
-                3: 4,
-                4: 4}
+class_weight = None
