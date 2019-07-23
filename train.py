@@ -57,40 +57,41 @@ test_generator = test_datagen.flow_from_directory(os.path.join(data_folder, 'Tes
                                                  )
 
 ###
-class Metrics(Callback):
-    def on_train_begin(self, logs={}):
-        self.val_kappas = []
+# class Metrics(Callback):
+#     def on_train_begin(self, logs={}):
+#         self.val_kappas = []
 
-    def on_epoch_end(self, epoch, logs={}):
-        X_val, y_val = self.validation_data[:2]
-        y_val = y_val.sum(axis=1) - 1
+#     def on_epoch_end(self, epoch, logs={}):
+#         X_val, y_val = self.validation_data[:2]
+#         y_val = y_val.sum(axis=1) - 1
         
-        y_pred = self.model.predict(X_val) > 0.5
-        y_pred = y_pred.astype(int).sum(axis=1) - 1
+#         y_pred = self.model.predict(X_val) > 0.5
+#         y_pred = y_pred.astype(int).sum(axis=1) - 1
 
-        _val_kappa = cohen_kappa_score(
-            y_val,
-            y_pred, 
-            weights='quadratic'
-        )
+#         _val_kappa = cohen_kappa_score(
+#             y_val,
+#             y_pred, 
+#             weights='quadratic'
+#         )
 
-        self.val_kappas.append(_val_kappa)
+#         self.val_kappas.append(_val_kappa)
 
-        print(f"val_kappa: {_val_kappa:.4f}")
+#         print(f"val_kappa: {_val_kappa:.4f}")
         
-        if _val_kappa == max(self.val_kappas):
-            print("Validation Kappa has improved. Saving model.")
-            self.model.save(os.path.join(model_path, model_name) + '_best.h5')
+#         if _val_kappa == max(self.val_kappas):
+#             print("Validation Kappa has improved. Saving model.")
+#             self.model.save(os.path.join(model_path, model_name) + '_best.h5')
 
-        return
+#         return
 
 logger = CSVLogger(os.path.join(model_path, model_name) + '-History.csv', separator = ',', append = True)
 os.makedirs(os.path.join(model_path, model_name + '-Checkpoint'), exist_ok = True)  # Create folder if not present
 checkpoint = ModelCheckpoint(os.path.join(model_path, model_name + '-Checkpoint', model_name) + '-Checkpoint-{epoch:03d}.h5')
-early_stop = EarlyStopping(monitor = 'val_loss', patience = 5, verbose = 1, min_delta = 1e-4)
-reduce_lr = ReduceLROnPlateau(monitor = 'val_loss', factor = 0.1, patience = 3, verbose = 1, min_delta = 1e-4)
-kappa_metrics = Metrics()
-callbacks_list = [logger, checkpoint, early_stop, reduce_lr, kappa_metrics]
+early_stop = EarlyStopping(monitor = 'val_loss', patience = 3, verbose = 1, min_delta = 1e-4)
+reduce_lr = ReduceLROnPlateau(monitor = 'val_loss', factor = 0.1, patience = 2, verbose = 1, min_delta = 1e-4)
+# kappa_metrics = Metrics()
+# callbacks_list = [logger, checkpoint, early_stop, reduce_lr, kappa_metrics]
+callbacks_list = [logger, checkpoint, early_stop, reduce_lr]
 
 STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
 STEP_SIZE_VALID = validation_generator.n // validation_generator.batch_size
@@ -107,10 +108,10 @@ history = model.fit_generator(
 
 
 
-# model.save(os.path.join(model_path, model_name) + '.h5')
+model.save(os.path.join(model_path, model_name) + '.h5')
 
 
-model = load_model(os.path.join(model_path, model_name) + '_best.h5')
+# model = load_model(os.path.join(model_path, model_name) + '_best.h5')
 
 #####
 STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
