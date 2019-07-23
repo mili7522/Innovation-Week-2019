@@ -58,3 +58,5 @@ train_datagen = ImageDataGenerator(
 #                 2: 1.328,
 #                 3: 2.503,
 #                 4: 3.539}
+
+class_weight = None

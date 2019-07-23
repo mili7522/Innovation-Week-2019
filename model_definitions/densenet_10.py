@@ -9,7 +9,6 @@ from keras import regularizers
 from keras import optimizers
 
 # Structure and data loading based on https://www.kaggle.com/xhlulu/aptos-2019-densenet-keras-starter
-# More image augmentation
 
 IMAGE_SIZE = 224
 
@@ -48,11 +47,6 @@ def build_model():
 train_datagen = ImageDataGenerator(
                                    zoom_range = 0.15,  # set range for random zoom
                                    # set mode for filling points outside the input boundaries
-                                   shear_range = 0.1,
-                                   brightness_range = (-0.1, 0.1),
-                                   rotation_range = 5,
-                                   width_shift_range = 0.1,
-                                   height_shift_range = 0.1,
                                    fill_mode = 'constant',
                                    cval = 0.,  # value used for fill_mode = "constant"
                                    horizontal_flip = True,  # randomly flip images
@@ -65,4 +59,8 @@ train_datagen = ImageDataGenerator(
 #                 3: 2.503,
 #                 4: 3.539}
 
-class_weight = None
+class_weight = {0: 0.642,
+                1: 0.994,
+                2: 0.664,
+                3: 1.252,
+                4: 1.770}

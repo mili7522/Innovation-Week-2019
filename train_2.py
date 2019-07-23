@@ -89,6 +89,7 @@ history = model.fit_generator(
                               epochs = EPOCHS,
                               validation_data = (x_val, y_val),
                               callbacks = callbacks_list,
+                              class_weight = modelDefinition.class_weight,
                               workers = 4
                              )
 
