@@ -15,7 +15,10 @@ modelDefinition = importlib.import_module(model_script)
 model = modelDefinition.build_model()
 IMAGE_SIZE = modelDefinition.IMAGE_SIZE
 
-folder = '/media/mike/Files/Data and Results/innovation-challenge-2019/Train/'
+if os.path.exists('/media/mike/Files/'):
+    data_folder = '/media/mike/Files/Data and Results/innovation-challenge-2019/'
+else:
+    data_folder = '/project/rc2d/InnovationWeek/Data/'
 model_path = 'models'  # For saving
 model_name = model_type
 
@@ -31,20 +34,20 @@ train_datagen = modelDefinition.train_datagen
 test_datagen = modelDefinition.test_datagen
 
 train_generator = train_datagen.flow_from_directory(
-                                                    os.path.join(folder, 'train'),
+                                                    os.path.join(data_folder, 'Train/train'),
                                                     target_size = (IMAGE_SIZE, IMAGE_SIZE),
                                                     batch_size = BATCH_SIZE,
                                                     class_mode = 'categorical'
                                                    )
 
 validation_generator = test_datagen.flow_from_directory(
-                                                        os.path.join(folder, 'val'),
+                                                        os.path.join(data_folder, 'Train/val'),
                                                         target_size = (IMAGE_SIZE, IMAGE_SIZE),
                                                         batch_size = BATCH_SIZE,
                                                         class_mode = 'categorical'
                                                        )
 
-test_generator = test_datagen.flow_from_directory('/media/mike/Files/Data and Results/innovation-challenge-2019/Test/',
+test_generator = test_datagen.flow_from_directory(os.path.join(data_folder, 'Test/'),
                                                   target_size = (IMAGE_SIZE, IMAGE_SIZE),
                                                   class_mode = None,
                                                   batch_size = 1,
