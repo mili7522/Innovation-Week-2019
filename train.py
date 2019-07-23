@@ -3,6 +3,7 @@ import importlib
 import sys
 import os
 from utils import savePredictions
+from sklearn.metrics import cohen_kappa_score, accuracy_score
 
 if len(sys.argv) > 1:
     model_type = sys.argv[1].lower()
@@ -18,7 +19,7 @@ IMAGE_SIZE = modelDefinition.IMAGE_SIZE
 if os.path.exists('/media/mike/Files/'):
     data_folder = '/media/mike/Files/Data and Results/innovation-challenge-2019/'
 else:
-    data_folder = '/project/rc2d/InnovationWeek/Data/'
+    data_folder = '/project/rc2d/Mike/InnovationWeek/Data/'
 model_path = 'models'  # For saving
 model_name = model_type
 
