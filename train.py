@@ -121,6 +121,7 @@ y_test = y_test.astype(int).sum(axis = 1) - 1
 
 file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
 
+os.makedirs('predictions', exist_ok = True)
 save_predictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
 
 pd.DataFrame(kappa_metrics.val_kappas).to_csv(os.path.join(model_path, 'history', model_name) + '-kappa.csv', header = False)
