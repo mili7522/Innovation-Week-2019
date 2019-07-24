@@ -102,7 +102,7 @@ model = load_model(os.path.join(model_path, model_name) + '_best.h5')
 y_test = model.predict(x_test) > 0.5
 y_test = y_test.astype(int).sum(axis=1) - 1
 
-file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None).values
+file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
 
 savePredictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
 
