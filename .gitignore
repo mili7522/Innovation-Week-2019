@@ -2,3 +2,4 @@ __pycache__/
 models/*Checkpoint/
 misc/.ipynb_checkpoints/
 models/*.h5
+old_iterations/
