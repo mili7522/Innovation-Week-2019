@@ -9,27 +9,48 @@ from keras import regularizers
 from keras import optimizers
 
 # Structure and data loading based on https://www.kaggle.com/xhlulu/aptos-2019-densenet-keras-starter
-# Adding back in class weights
+# Combined structure from the previous densenet models with same simplification
+# Allow early layer training
 
 IMAGE_SIZE = 224
 
 densenet = DenseNet121(include_top = False, weights = 'imagenet', input_shape = (IMAGE_SIZE,IMAGE_SIZE,3), classes = 5)
 
+
+IMAGE_SIZE = 224
+adam_optimizer_options = {'lr': 0.001, 'beta_1': 0.9, 'beta_2': 0.999}
+
 def build_model():
-    model = Sequential()
-    model.add(densenet)
-    model.add(GlobalAveragePooling2D())
-    model.add(Dropout(0.5))
-    model.add(Dense(5, activation = 'sigmoid'))
-    
-    model.compile(
+    base_model = DenseNet121(include_top = False, weights = 'imagenet', input_shape = (IMAGE_SIZE,IMAGE_SIZE,3), classes = 5)
+
+    x = base_model.output
+    x = GlobalAveragePooling2D()(x)
+
+    # x = Dropout(0.5)(x)
+    # x = Dense(512, kernel_regularizer = regularizers.l2(l = 0.001))(x)
+    # x = BatchNormalization()(x)
+    # x = Activation('relu')(x)
+
+    x = Dropout(0.5)(x)
+    x = Dense(256, kernel_regularizer = regularizers.l2(l = 0.001))(x)
+    x = BatchNormalization()(x)
+    x = Activation('relu')(x)
+
+    x = Dropout(0.5)(x)
+    predictions = Dense(5, activation = 'sigmoid')(x)
+
+        
+    custom_model = Model(inputs = base_model.input, outputs = predictions)
+
+    # base_model.trainable = False
+
+    custom_model.compile(
         loss = 'binary_crossentropy',
-        optimizer = optimizers.Adam(lr = 0.00005),
+        optimizer = optimizers.Adam(**adam_optimizer_options),
         metrics = ['accuracy']
     )
-    
-    return model
 
+    return custom_model
 
 # https://keras.io/preprocessing/image/
 # train_datagen = ImageDataGenerator(
@@ -60,8 +81,4 @@ train_datagen = ImageDataGenerator(
 #                 3: 2.503,
 #                 4: 3.539}
 
-class_weight = {0: 0.642,
-                1: 0.994,
-                2: 0.664,
-                3: 1.252,
-                4: 1.770}
+class_weight = None
