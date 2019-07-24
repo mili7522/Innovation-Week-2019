@@ -3,3 +3,4 @@ models/*Checkpoint/
 misc/.ipynb_checkpoints/
 models/*.h5
 old_iterations/
+reference/*.pdf
