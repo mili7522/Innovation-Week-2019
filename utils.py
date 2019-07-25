@@ -15,7 +15,7 @@ def save_predictions(predictions, filenames, save_name):
 
 def save_summary(model_name, best_kappa, epoch, filename = 'models/performance.csv'):
     if os.path.isfile(filename):
-        df = pd.read_csv(filename)
+        df = pd.read_csv(filename, index_col = 0)
     else:
         df = pd.DataFrame(columns = ['Best Kappa', 'Epoch'])
     df.loc[model_name, 'Best Kappa'] = best_kappa
