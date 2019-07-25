@@ -17,7 +17,7 @@ if len(sys.argv) > 2:
 else:
     model_variant = 1
 if len(sys.argv) > 3:
-    repetition = int(sys.argv[2])
+    repetition = int(sys.argv[3])
 else:
     repetition = None
 
