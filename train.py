@@ -48,10 +48,15 @@ BATCH_SIZE = 16
 
 ### Load data
 x_train = np.load(os.path.join(data_folder, 'Train/training_x.npy'))
-y_train = np.load(os.path.join(data_folder, 'Train/training_y_multi.npy'))
 x_val = np.load(os.path.join(data_folder, 'Train/val_x.npy'))
-y_val = np.load(os.path.join(data_folder, 'Train/val_y_multi.npy'))
 x_test = np.load(os.path.join(data_folder, 'Test/test_x.npy'))
+
+if modelClass.last_activation == "softmax":
+    y_val = np.load(os.path.join(data_folder, 'Train/val_y.npy'))
+    y_train = np.load(os.path.join(data_folder, 'Train/training_y.npy'))
+else:
+    y_val = np.load(os.path.join(data_folder, 'Train/val_y_multi.npy'))
+    y_train = np.load(os.path.join(data_folder, 'Train/training_y_multi.npy'))
 
 train_datagen = modelClass.get_image_datagen()
 
@@ -67,10 +72,16 @@ class Metrics(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         X_val, y_val = self.validation_data[:2]
-        y_val = y_val.sum(axis=1) - 1
-        
-        y_pred = self.model.predict(X_val) > 0.5
-        y_pred = y_pred.astype(int).sum(axis=1) - 1
+        if modelClass.last_activation == "softmax":
+            y_val = np.argmax(y_val, axis = 1)
+
+            y_pred = self.model.predict(X_val)
+            y_pred = np.argmax(y_pred, axis = 1)
+        else:
+            y_val = y_val.sum(axis = 1) - 1
+            
+            y_pred = self.model.predict(X_val) > 0.5
+            y_pred = y_pred.astype(int).sum(axis = 1) - 1
 
         _val_kappa = cohen_kappa_score(
             y_val,
@@ -116,8 +127,12 @@ history = model.fit_generator(
 model = load_model(os.path.join(model_path, model_name) + '_best.h5')
 
 #####
-y_test = model.predict(x_test, verbose = (verbose - 2) * -1 ) > 0.5
-y_test = y_test.astype(int).sum(axis = 1) - 1
+if modelClass.last_activation == "softmax":
+    y_test = model.predict(x_test, verbose = (verbose - 2) * -1 )
+    y_test = np.argmax(y_test, axis = 1)
+else:
+    y_test = model.predict(x_test, verbose = (verbose - 2) * -1 ) > 0.5
+    y_test = y_test.astype(int).sum(axis = 1) - 1
 
 file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
 

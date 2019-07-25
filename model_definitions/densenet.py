@@ -9,6 +9,7 @@ from keras.layers import Activation, Conv2D, Concatenate, AveragePooling2D
 from keras.regularizers import l2
 from keras.optimizers import Adam
 import keras.backend as K
+import tensorflow as tf
 
 
 IMAGE_SIZE = 224
@@ -115,6 +116,43 @@ class DRModel():
         x = AveragePooling2D(2, strides = 2)(x)
         return x
 
+    def kappa_loss(self, y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name = 'kappa'):
+        """A continuous differentiable approximation of discrete kappa loss.
+            Args:
+                y_pred: 2D tensor or array, [batch_size, num_classes]
+                y_true: 2D tensor or array, [batch_size, num_classes]
+                y_pow: int,  e.g. y_pow=2
+                N: typically num_classes of the model
+                bsize: batch_size of the training or validation ops
+                eps: a float, prevents divide by zero
+                name: Optional scope/name for op_scope.
+            Returns:
+                A tensor with the kappa loss."""
+
+        with tf.name_scope(name):
+            y_true = tf.to_float(y_true)
+            repeat_op = tf.to_float(tf.tile(tf.reshape(tf.range(0, N), [N, 1]), [1, N]))
+            repeat_op_sq = tf.square((repeat_op - tf.transpose(repeat_op)))
+            weights = repeat_op_sq / tf.to_float((N - 1) ** 2)
+        
+            pred_ = y_pred ** y_pow
+            try:
+                pred_norm = pred_ / (eps + tf.reshape(tf.reduce_sum(pred_, 1), [-1, 1]))
+            except Exception:
+                pred_norm = pred_ / (eps + tf.reshape(tf.reduce_sum(pred_, 1), [bsize, 1]))
+        
+            hist_rater_a = tf.reduce_sum(pred_norm, 0)
+            hist_rater_b = tf.reduce_sum(y_true, 0)
+        
+            conf_mat = tf.matmul(tf.transpose(pred_norm), y_true)
+        
+            nom = tf.reduce_sum(weights * conf_mat)
+            denom = tf.reduce_sum(weights * tf.matmul(
+                tf.reshape(hist_rater_a, [N, 1]), tf.reshape(hist_rater_b, [1, N])) /
+                                tf.to_float(bsize))
+        
+            return nom / (denom + eps)
+
     def build_model(self):
         base_model, x = self.get_base_model(self.base_weights, self.base_structure, self.base_output_loc)
 
@@ -144,8 +182,13 @@ class DRModel():
 
         base_model.trainable = self.base_model_trainable
 
+        if self.loss == 'kappa':
+            loss = self.kappa_loss
+        else:
+            loss = self.loss
+
         custom_model.compile(
-            loss = self.loss,
+            loss = loss,
             optimizer = self.optimizer(**self.optimizer_options),
             metrics = ['accuracy']
         )
@@ -203,6 +246,18 @@ def getModelVariant(variant):
         24: DRModel(optimizer_options = {'lr': 0.0005}),
         25: DRModel(optimizer_options = {'lr': 0.0001}, base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False),
         26: DRModel(optimizer_options = {'lr': 0.0005}, base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False),
+        27: DRModel(other_datagen_options = dict(brightness_range = (0.9, 1.1))),  # Doing the brightness range properly
+        28: DRModel(other_datagen_options = dict(brightness_range = (0.8, 1.2))),  # Doing the brightness range properly
+        29: DRModel(other_datagen_options = dict(zca_whitening = True)),
+        30: DRModel(other_datagen_options = dict(samplewise_center = True)),
+        31: DRModel(other_datagen_options = dict(samplewise_center = True, samplewise_std_normalization = True)),
+        32: DRModel(class_weight = {0: 0.165, 1: 1.586, 2: 0.708, 3: 2.514, 4: 5.027}),  # Balanced class weights
+        33: DRModel(class_weight = {0: 0.642, 1: 1.988, 2: 1.328, 3: 2.503, 4: 3.539}),  # Balanced square root class weights
+        34: DRModel(loss = 'kappa', last_activation = 'softmax'),
+        35: DRModel(loss = 'kappa', last_activation = 'softmax', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False),  # 14 with kappa loss
+        36: DRModel(loss = 'kappa', last_activation = 'softmax', base_structure = 201, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False),  # 15 with kappa loss
+        37: DRModel(loss = 'kappa', last_activation = 'softmax', optimizer_options = {'lr': 0.0001}),
+        38: DRModel(loss = 'kappa', last_activation = 'softmax', optimizer_options = {'lr': 0.0005}),
     }
     assert variant in switcher, "Model variant does not exist. Check the integer input"
     model = switcher[variant]
