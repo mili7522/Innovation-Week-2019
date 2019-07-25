@@ -197,6 +197,12 @@ def getModelVariant(variant):
         18: DRModel(base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [12, 6], base_model_trainable = False),  # 9 with densenet 169
         19: DRModel(base_structure = 201, base_output_loc = 140, additional_densenet_blocks = [12, 6], base_model_trainable = False),  # 9 with densenet 201
         20: DRModel(other_datagen_options = dict(brightness_range = (-0.05, 0.05))),  # Reduced range
+        21: DRModel(other_datagen_options = dict(brightness_range = (-0.02, 0.02))),  # Reduced range
+        22: DRModel(other_datagen_options = dict(rotation_range = 5, width_shift_range = 0.1, height_shift_range = 0.1)),
+        23: DRModel(optimizer_options = {'lr': 0.0001}),
+        24: DRModel(optimizer_options = {'lr': 0.0005}),
+        25: DRModel(optimizer_options = {'lr': 0.0001}, base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False),
+        26: DRModel(optimizer_options = {'lr': 0.0005}, base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False),
     }
     assert variant in switcher, "Model variant does not exist. Check the integer input"
     model = switcher[variant]
