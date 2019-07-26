@@ -4,7 +4,7 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-from utils import save_predictions, save_summary
+from utils import save_predictions, save_summary, kappa_loss
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
 
@@ -124,7 +124,7 @@ history = model.fit_generator(
 
 
 # model.save(os.path.join(model_path, model_name) + '.h5')
-model = load_model(os.path.join(model_path, model_name) + '_best.h5')
+model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss})
 
 #####
 if modelClass.last_activation == "softmax":
