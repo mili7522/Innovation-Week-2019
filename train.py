@@ -48,14 +48,20 @@ EPOCHS = 30
 BATCH_SIZE = 16
 
 ### Load data
-x = np.load(os.path.join(data_folder, 'Train/x_mix.npy'))
+folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy']
+xs = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+x = np.vstack(xs)
 x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
 
 if modelClass.last_activation == "softmax":
-    y = np.load(os.path.join(data_folder, 'Train/y_mix.npy'))
+    folders = ['Train/y_mix.npy', '2015_data/Train/y_mix.npy']
+    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+    y = np.vstack(ys)
     classes = np.argmax(y, axis = 1)
 else:
-    y = np.load(os.path.join(data_folder, 'Train/y_multi_mix.npy'))
+    folders = ['Train/y_multi_mix.npy', '2015_data/Train/y_multi_mix.npy']
+    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+    y = np.vstack(ys)
     classes = y.astype(int).sum(axis = 1) - 1
 
 x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.2, random_state = 42, stratify = classes)

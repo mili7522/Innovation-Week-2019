@@ -4,6 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 from utils import save_predictions, kappa_loss, ordinal_loss
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
 
@@ -35,12 +36,24 @@ model_name = "{}-{:03}{}".format( model_type, model_variant, "" if repetition is
 
 model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
 
-x_val = np.load(os.path.join(data_folder, 'Train/val_x.npy'))
-x_test = np.load(os.path.join(data_folder, 'Test/test_x.npy'))
+### Load data
+folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy']
+xs = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+x = np.vstack(xs)
+x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
+
 if modelClass.last_activation == "softmax":
-    y_val = np.load(os.path.join(data_folder, 'Train/val_y.npy'))
+    folders = ['Train/y_mix.npy', '2015_data/Train/y_mix.npy']
+    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+    y = np.vstack(ys)
+    classes = np.argmax(y, axis = 1)
 else:
-    y_val = np.load(os.path.join(data_folder, 'Train/val_y_multi.npy'))
+    folders = ['Train/y_multi_mix.npy', '2015_data/Train/y_multi_mix.npy']
+    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+    y = np.vstack(ys)
+    classes = y.astype(int).sum(axis = 1) - 1
+
+x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.2, random_state = 42, stratify = classes)
 
 #####
 if modelClass.last_activation == "softmax":
