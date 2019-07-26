@@ -3,7 +3,7 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-from utils import save_predictions, kappa_loss
+from utils import save_predictions, kappa_loss, ordinal_loss
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
 
@@ -33,7 +33,7 @@ else:
 model_path = 'models'
 model_name = "{}-{:03}{}".format( model_type, model_variant, "" if repetition is None else "_r{:02}".format(repetition) )
 
-model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss})
+model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
 
 x_val = np.load(os.path.join(data_folder, 'Train/val_x.npy'))
 x_test = np.load(os.path.join(data_folder, 'Test/test_x.npy'))

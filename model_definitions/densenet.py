@@ -10,7 +10,7 @@ from keras.regularizers import l2
 from keras.optimizers import Adam
 import keras.backend as K
 import tensorflow as tf
-from utils import kappa_loss
+from utils import kappa_loss, ordinal_loss
 
 
 IMAGE_SIZE = 224
@@ -148,6 +148,8 @@ class DRModel():
 
         if self.loss == 'kappa':
             loss = kappa_loss
+        elif self.loss == 'ordinal':
+            loss = ordinal_loss
         else:
             loss = self.loss
 
@@ -227,7 +229,8 @@ def getModelVariant(variant):
         41: DRModel(loss = 'kappa', last_activation = 'softmax', class_weight = {0: 0.165, 1: 1.586, 2: 0.708, 3: 2.514, 4: 5.027}),  # Balanced class weights
         42: DRModel(loss = 'kappa', last_activation = 'softmax', class_weight = {0: 0.642, 1: 1.988, 2: 1.328, 3: 2.503, 4: 3.539}),  # Balanced square root class weights
         43: DRModel(loss = 'kappa', last_activation = 'softmax', class_weight = {0: 0.642, 1: 0.994, 2: 0.664, 3: 1.252, 4: 1.770}),
-        44: DRModel(pooling_type = "average"),
+        44: DRModel(pooling_type = "max"),
+        45: DRModel(loss = 'ordinal', last_activation = 'softmax'),
     }
     assert variant in switcher, "Model variant does not exist. Check the integer input"
     model = switcher[variant]

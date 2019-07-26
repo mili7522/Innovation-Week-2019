@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import os
 import tensorflow as tf
+from keras import backend as K
+from keras import losses
 
 
 
@@ -62,3 +64,7 @@ def kappa_loss(y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name =
                                 tf.to_float(bsize))
         
             return nom / (denom + eps)
+
+def ordinal_loss(y_true, y_pred):
+    weights = K.cast(K.abs(K.argmax(y_true, axis=1) - K.argmax(y_pred, axis=1))/(K.int_shape(y_pred)[1] - 1), dtype='float32')
+    return (1.0 + weights) * losses.categorical_crossentropy(y_true, y_pred)

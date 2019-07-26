@@ -4,7 +4,8 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-from utils import save_predictions, save_summary, kappa_loss
+from utils import save_predictions, save_summary, kappa_loss, ordinal_loss
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
 
@@ -47,16 +48,17 @@ EPOCHS = 30
 BATCH_SIZE = 16
 
 ### Load data
-x_train = np.load(os.path.join(data_folder, 'Train/training_x.npy'))
-x_val = np.load(os.path.join(data_folder, 'Train/val_x.npy'))
-x_test = np.load(os.path.join(data_folder, 'Test/test_x.npy'))
+x = np.load(os.path.join(data_folder, 'Train/x_mix.npy'))
+x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
 
 if modelClass.last_activation == "softmax":
-    y_val = np.load(os.path.join(data_folder, 'Train/val_y.npy'))
-    y_train = np.load(os.path.join(data_folder, 'Train/training_y.npy'))
+    y = np.load(os.path.join(data_folder, 'Train/y_mix.npy'))
+    classes = np.argmax(y, axis = 1)
 else:
-    y_val = np.load(os.path.join(data_folder, 'Train/val_y_multi.npy'))
-    y_train = np.load(os.path.join(data_folder, 'Train/training_y_multi.npy'))
+    y = np.load(os.path.join(data_folder, 'Train/y_multi_mix.npy'))
+    classes = y.astype(int).sum(axis = 1) - 1
+
+x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.2, random_state = 42, stratify = classes)
 
 train_datagen = modelClass.get_image_datagen()
 
@@ -124,7 +126,7 @@ history = model.fit_generator(
 
 
 # model.save(os.path.join(model_path, model_name) + '.h5')
-model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss})
+model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
 
 #####
 if modelClass.last_activation == "softmax":
