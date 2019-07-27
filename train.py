@@ -48,18 +48,18 @@ EPOCHS = 30
 BATCH_SIZE = 16
 
 ### Load data
-folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy']
+folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy', '2015_data/Test/x_mix.npy', 'aptos2019_data/Train/x_mix.npy']
 xs = [np.load(os.path.join(data_folder, folder), mmap_mode = 'r') for folder in folders]
 x = np.vstack(xs)
 x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
 
 if modelClass.last_activation == "softmax":
-    folders = ['Train/y_mix.npy', '2015_data/Train/y_mix.npy']
+    folders = ['Train/y_mix.npy', '2015_data/Train/y_mix.npy', '2015_data/Test/y_mix.npy', 'aptos2019_data/Train/y_mix.npy']
     ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
     y = np.vstack(ys)
     classes = np.argmax(y, axis = 1)
 else:
-    folders = ['Train/y_multi_mix.npy', '2015_data/Train/y_multi_mix.npy']
+    folders = ['Train/y_multi_mix.npy', '2015_data/Train/y_multi_mix.npy', '2015_data/Test/y_multi_mix.npy', 'aptos2019_data/Train/y_multi_mix.npy']
     ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
     y = np.vstack(ys)
     classes = y.astype(int).sum(axis = 1) - 1
