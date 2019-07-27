@@ -231,6 +231,14 @@ def getModelVariant(variant):
         43: DRModel(loss = 'kappa', last_activation = 'softmax', class_weight = {0: 0.642, 1: 0.994, 2: 0.664, 3: 1.252, 4: 1.770}),
         44: DRModel(pooling_type = "max"),
         45: DRModel(loss = 'ordinal', last_activation = 'softmax'),
+
+        46: DRModel(base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1))),  # 14 + 2
+        47: DRModel(base_output_loc = 312, additional_densenet_blocks = [16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1))),  # 7 + 27
+        48: DRModel(base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1)), optimizer_options = {'lr': 0.0001}),  # 14 + 27 + 23
+        49: DRModel(base_structure = 201, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1)), optimizer_options = {'lr': 0.0001}),  # 15 + 27 + 23
+
+        50: DRModel(loss = 'kappa', last_activation = 'softmax', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1))),  # 46 with kappa loss
+        51: DRModel(loss = 'ordinal', last_activation = 'softmax', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1))),  # 46 with kappa loss
     }
     assert variant in switcher, "Model variant does not exist. Check the integer input"
     model = switcher[variant]

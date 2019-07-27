@@ -31,9 +31,11 @@ model = modelClass.build_model()
 if os.path.exists('/media/mike/Files/'):
     data_folder = '/media/mike/Files/Data and Results/innovation-challenge-2019/'
     verbose = 1
+    folders = ['Train/']
 else:
     data_folder = '/project/rc2d/Mike/InnovationWeek/Data/'
     verbose = 2
+    folders = ['Train/', '2015_data/Train/', '2015_data/Test/', 'aptos2019_data/Train/']
 model_path = 'models'  # For saving
 model_name = "{}-{:03}{}".format( model_type, model_variant, "" if repetition is None else "_r{:02}".format(repetition) )
 print("\n=====================")
@@ -46,21 +48,19 @@ print("=====================\n")
 
 EPOCHS = 30
 BATCH_SIZE = 16
+fill_type = 'mix'
 
 ### Load data
-folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy', '2015_data/Test/x_mix.npy', 'aptos2019_data/Train/x_mix.npy']
-xs = [np.load(os.path.join(data_folder, folder), mmap_mode = 'r') for folder in folders]
+xs = [np.load(os.path.join(data_folder, folder + 'x_{}.npy'.format(fill_type)), mmap_mode = 'r') for folder in folders]
 x = np.vstack(xs)
-x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
+x_test = np.load(os.path.join(data_folder, 'Test/test_x_{}.npy'.format(fill_type)))
 
 if modelClass.last_activation == "softmax":
-    folders = ['Train/y_mix.npy', '2015_data/Train/y_mix.npy', '2015_data/Test/y_mix.npy', 'aptos2019_data/Train/y_mix.npy']
-    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+    ys = [np.load(os.path.join(data_folder, folder + 'y_{}.npy'.format(fill_type))) for folder in folders]
     y = np.vstack(ys)
     classes = np.argmax(y, axis = 1)
 else:
-    folders = ['Train/y_multi_mix.npy', '2015_data/Train/y_multi_mix.npy', '2015_data/Test/y_multi_mix.npy', 'aptos2019_data/Train/y_multi_mix.npy']
-    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+    ys = [np.load(os.path.join(data_folder, folder + 'y_multi_{}.npy'.format(fill_type))) for folder in folders]
     y = np.vstack(ys)
     classes = y.astype(int).sum(axis = 1) - 1
 
@@ -74,13 +74,17 @@ train_generator = train_datagen.flow(x_train, y_train, batch_size = BATCH_SIZE)
 
 
 ###
+best_kappa = -np.inf
+val_kappas = []
+best_kappa_epoch = None
 class Metrics(Callback):
-    def on_train_begin(self, logs={}):
-        self.val_kappas = []
-        self.best_kappa = -np.inf
-        self.best_kappa_epoch = None
+    # def on_train_begin(self, logs={}):
+        # self.val_kappas = []
+        # self.best_kappa = -np.inf
+        # self.best_kappa_epoch = None
 
     def on_epoch_end(self, epoch, logs={}):
+        global best_kappa, best_kappa_epoch, val_kappas
         X_val, y_val = self.validation_data[:2]
         if modelClass.last_activation == "softmax":
             y_val = np.argmax(y_val, axis = 1)
@@ -99,19 +103,19 @@ class Metrics(Callback):
             weights='quadratic'
         )
 
-        self.val_kappas.append(_val_kappa)
+        val_kappas.append(_val_kappa)
 
         print(f"val_kappa: {_val_kappa:.4f}")
         
-        if _val_kappa > self.best_kappa:
-            self.best_kappa = _val_kappa
-            self.best_kappa_epoch = epoch
+        if _val_kappa > best_kappa:
+            best_kappa = _val_kappa
+            best_kappa_epoch = epoch
             print("Validation Kappa has improved. Saving model.")
             self.model.save(os.path.join(model_path, model_name) + '_best.h5')
 
         return
 
-logger = CSVLogger(os.path.join(model_path, 'history', model_name) + '-History.csv', separator = ',', append = False)
+logger = CSVLogger(os.path.join(model_path, 'history', model_name) + '-History.csv', separator = ',', append = True)
 os.makedirs(os.path.join(model_path, 'history'), exist_ok = True)
 # os.makedirs(os.path.join(model_path, model_name + '-Checkpoint'), exist_ok = True)  # Create folder if not present
 # checkpoint = ModelCheckpoint(os.path.join(model_path, model_name + '-Checkpoint', model_name) + '-Checkpoint-{epoch:03d}.h5')
@@ -121,16 +125,31 @@ kappa_metrics = Metrics()
 callbacks_list = [logger, reduce_lr, kappa_metrics]
 
 STEP_SIZE_TRAIN = x_train.shape[0] // train_generator.batch_size
-history = model.fit_generator(
-                              train_generator,
-                              steps_per_epoch = STEP_SIZE_TRAIN,
-                              epochs = EPOCHS,
-                              validation_data = (x_val, y_val),
-                              callbacks = callbacks_list,
-                              class_weight = modelClass.class_weight,
-                              workers = 4,
-                              verbose = verbose
-                             )
+# Two stage training
+model.fit_generator(
+                    train_generator,
+                    steps_per_epoch = STEP_SIZE_TRAIN,
+                    epochs = EPOCHS // 2,
+                    validation_data = (x_val, y_val),
+                    callbacks = callbacks_list,
+                    class_weight = modelClass.class_weight,
+                    workers = 4,
+                    verbose = verbose
+                    )
+
+model.trainable = True
+
+model.fit_generator(
+                    train_generator,
+                    steps_per_epoch = STEP_SIZE_TRAIN,
+                    initial_epoch = EPOCHS // 2,
+                    epochs = EPOCHS,
+                    validation_data = (x_val, y_val),
+                    callbacks = callbacks_list,
+                    class_weight = modelClass.class_weight,
+                    workers = 4,
+                    verbose = verbose
+                    )
 
 
 # model.save(os.path.join(model_path, model_name) + '.h5')
@@ -149,5 +168,5 @@ file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header
 os.makedirs('predictions', exist_ok = True)
 save_predictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
 
-pd.DataFrame(kappa_metrics.val_kappas).to_csv(os.path.join(model_path, 'history', model_name) + '-kappa.csv', header = False)
-save_summary(model_name, best_kappa = kappa_metrics.best_kappa, epoch = kappa_metrics.best_kappa_epoch, filename = 'models/performance.csv')
+pd.DataFrame(val_kappas).to_csv(os.path.join(model_path, 'history', model_name) + '-kappa.csv', header = False)
+save_summary(model_name, best_kappa = best_kappa, epoch = best_kappa_epoch, filename = 'models/performance.csv')
