@@ -49,7 +49,7 @@ BATCH_SIZE = 16
 
 ### Load data
 folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy']
-xs = [np.load(os.path.join(data_folder, folder)) for folder in folders]
+xs = [np.load(os.path.join(data_folder, folder), mmap_mode = 'r') for folder in folders]
 x = np.vstack(xs)
 x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
 
@@ -65,6 +65,8 @@ else:
     classes = y.astype(int).sum(axis = 1) - 1
 
 x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.2, random_state = 42, stratify = classes)
+del x
+del y
 
 train_datagen = modelClass.get_image_datagen()
 
