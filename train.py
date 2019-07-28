@@ -46,7 +46,7 @@ print("=====================\n")
 # validation_examples = 2831
 # test_examples = 999
 
-EPOCHS = 30
+EPOCHS = 50
 BATCH_SIZE = 16
 fill_type = 'mix'
 

@@ -1,0 +1,36 @@
+-- Job Summary -------------------------------------------------------
+Job Id: 3575174.pbsserver for user mili7522 in queue gpu
+Job Name: train.pbs
+Project: RDS-FEI-rc2d-RW
+Exit Status: 0
+Job run as chunks (hpc219:ncpus=8:ngpus=1:mem=83886080kb)
+Walltime requested:   06:00:00 :      Walltime used:   05:56:07
+                               :   Walltime percent:      98.9%
+-- Nodes Summary -----------------------------------------------------
+-- node hpc219 summary
+    Cpus requested:          8 :          Cpus used:       2.44
+          Cpu Time:   14:29:30 :        Cpu percent:      30.5%
+     Mem requested:     80.0GB :           Mem used:     73.5GB
+                               :        Mem percent:      91.9%
+
+-- WARNINGS ----------------------------------------------------------
+
+** Excessive Walltime utilisation.  While this may be normal, it may help to
+** check the following:
+**   Did the job parameters specify enough walltime?
+**   Did your analysis complete successfully, or did it run out of time?
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could allow your job to run faster.
+**   Did the application run more slowly than it should have? Is this analysis
+**   the one you intended to run?
+** 
+** Low CPU utilisation on hpc219.  While this may be normal, it may help to check
+** the following:
+**   Did the job parameters specify too many cores?  Requesting fewer cores
+**   could help your job to start sooner.
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could make your job to run faster without needing any more cores.
+**   Did the application use fewer cores than it should have? Is this analysis
+**   the one you intended to run?
+**
+-- End of Job Summary ------------------------------------------------

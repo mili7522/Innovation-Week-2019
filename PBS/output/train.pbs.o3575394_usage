@@ -1,0 +1,27 @@
+-- Job Summary -------------------------------------------------------
+Job Id: 3575394.pbsserver for user mili7522 in queue gpu
+Job Name: train.pbs
+Project: RDS-FEI-rc2d-RW
+Exit Status: 0
+Job run as chunks (hpc220:ncpus=8:ngpus=1:mem=83886080kb)
+Walltime requested:   08:00:00 :      Walltime used:   06:19:44
+                               :   Walltime percent:      79.1%
+-- Nodes Summary -----------------------------------------------------
+-- node hpc220 summary
+    Cpus requested:          8 :          Cpus used:       2.50
+          Cpu Time:   15:50:38 :        Cpu percent:      31.3%
+     Mem requested:     80.0GB :           Mem used:     68.6GB
+                               :        Mem percent:      85.7%
+
+-- WARNINGS ----------------------------------------------------------
+
+** Low CPU utilisation on hpc220.  While this may be normal, it may help to check
+** the following:
+**   Did the job parameters specify too many cores?  Requesting fewer cores
+**   could help your job to start sooner.
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could make your job to run faster without needing any more cores.
+**   Did the application use fewer cores than it should have? Is this analysis
+**   the one you intended to run?
+**
+-- End of Job Summary ------------------------------------------------
