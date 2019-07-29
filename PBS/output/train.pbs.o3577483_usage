@@ -1,0 +1,40 @@
+-- Job Summary -------------------------------------------------------
+Job Id: 3577483.pbsserver for user mili7522 in queue gpu
+Job Name: train.pbs
+Project: RDS-FEI-rc2d-RW
+Exit Status: 1
+Job run as chunks (hpc221:ncpus=8:ngpus=1:mem=83886080kb)
+Walltime requested:   12:00:00 :      Walltime used:   10:31:48
+                               :   Walltime percent:      87.8%
+-- Nodes Summary -----------------------------------------------------
+-- node hpc221 summary
+    Cpus requested:          8 :          Cpus used:       2.41
+          Cpu Time:   25:20:42 :        Cpu percent:      30.1%
+     Mem requested:     80.0GB :           Mem used:     79.1GB
+                               :        Mem percent:      98.8%
+
+-- WARNINGS ----------------------------------------------------------
+
+** Job Exit status > 0.  The job has indicated that it has failed for some
+** reason, which may be related to the analysis or application.
+** It may be worth checking the analysis results to confirm they are sensible.
+** 
+** Low CPU utilisation on hpc221.  While this may be normal, it may help to check
+** the following:
+**   Did the job parameters specify too many cores?  Requesting fewer cores
+**   could help your job to start sooner.
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could make your job to run faster without needing any more cores.
+**   Did the application use fewer cores than it should have? Is this analysis
+**   the one you intended to run?
+**
+** Excessive Memory utilisation on hpc221. While this may be normal, it may help to
+** check the following:
+**   Did the job parameters specify enough memory?
+**   Did your analysis complete successfully, or did it run out of RAM?
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could allow your job to run using less RAM in each chunk.
+**   Did the application use more memory than it should have? Is this analysis
+**   the one you intended to run?
+**
+-- End of Job Summary ------------------------------------------------

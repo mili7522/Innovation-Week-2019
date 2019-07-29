@@ -1,0 +1,189 @@
+
+=====================
+Training densenet-052
+=====================
+
+Epoch 1/25
+ - 691s - loss: 0.2074 - acc: 0.9176 - val_loss: 0.1654 - val_acc: 0.9350
+val_kappa: 0.6914
+Validation Kappa has improved. Saving model.
+Epoch 2/25
+ - 656s - loss: 0.1745 - acc: 0.9321 - val_loss: 0.1613 - val_acc: 0.9374
+val_kappa: 0.6808
+Epoch 3/25
+ - 656s - loss: 0.1651 - acc: 0.9359 - val_loss: 0.1805 - val_acc: 0.9276
+val_kappa: 0.7207
+Validation Kappa has improved. Saving model.
+Epoch 4/25
+ - 670s - loss: 0.1577 - acc: 0.9395 - val_loss: 0.1559 - val_acc: 0.9390
+val_kappa: 0.7495
+Validation Kappa has improved. Saving model.
+Epoch 5/25
+ - 658s - loss: 0.1533 - acc: 0.9412 - val_loss: 0.1664 - val_acc: 0.9375
+val_kappa: 0.7286
+Epoch 6/25
+ - 659s - loss: 0.1497 - acc: 0.9430 - val_loss: 0.1428 - val_acc: 0.9454
+val_kappa: 0.7408
+Epoch 7/25
+ - 658s - loss: 0.1470 - acc: 0.9439 - val_loss: 0.1470 - val_acc: 0.9441
+val_kappa: 0.7427
+Epoch 8/25
+ - 658s - loss: 0.1438 - acc: 0.9453 - val_loss: 0.1510 - val_acc: 0.9407
+val_kappa: 0.7479
+Epoch 9/25
+ - 658s - loss: 0.1410 - acc: 0.9466 - val_loss: 0.1489 - val_acc: 0.9446
+
+Epoch 00009: ReduceLROnPlateau reducing learning rate to 4.999999873689376e-06.
+val_kappa: 0.7298
+Epoch 10/25
+ - 656s - loss: 0.1301 - acc: 0.9509 - val_loss: 0.1336 - val_acc: 0.9502
+val_kappa: 0.7837
+Validation Kappa has improved. Saving model.
+Epoch 11/25
+ - 658s - loss: 0.1269 - acc: 0.9524 - val_loss: 0.1324 - val_acc: 0.9507
+val_kappa: 0.7874
+Validation Kappa has improved. Saving model.
+Epoch 12/25
+ - 673s - loss: 0.1254 - acc: 0.9528 - val_loss: 0.1334 - val_acc: 0.9508
+val_kappa: 0.7893
+Validation Kappa has improved. Saving model.
+Epoch 13/25
+ - 709s - loss: 0.1248 - acc: 0.9532 - val_loss: 0.1310 - val_acc: 0.9515
+val_kappa: 0.7928
+Validation Kappa has improved. Saving model.
+Epoch 14/25
+ - 707s - loss: 0.1236 - acc: 0.9538 - val_loss: 0.1317 - val_acc: 0.9515
+val_kappa: 0.7879
+Epoch 15/25
+ - 706s - loss: 0.1224 - acc: 0.9542 - val_loss: 0.1308 - val_acc: 0.9516
+val_kappa: 0.7887
+Epoch 16/25
+ - 708s - loss: 0.1209 - acc: 0.9549 - val_loss: 0.1311 - val_acc: 0.9513
+val_kappa: 0.7945
+Validation Kappa has improved. Saving model.
+Epoch 17/25
+ - 705s - loss: 0.1210 - acc: 0.9548 - val_loss: 0.1317 - val_acc: 0.9516
+val_kappa: 0.7959
+Validation Kappa has improved. Saving model.
+Epoch 18/25
+ - 703s - loss: 0.1202 - acc: 0.9548 - val_loss: 0.1313 - val_acc: 0.9518
+
+Epoch 00018: ReduceLROnPlateau reducing learning rate to 4.999999873689376e-07.
+val_kappa: 0.7889
+Epoch 19/25
+ - 698s - loss: 0.1185 - acc: 0.9557 - val_loss: 0.1303 - val_acc: 0.9522
+val_kappa: 0.7963
+Validation Kappa has improved. Saving model.
+Epoch 20/25
+ - 696s - loss: 0.1182 - acc: 0.9557 - val_loss: 0.1304 - val_acc: 0.9522
+val_kappa: 0.7954
+Epoch 21/25
+ - 701s - loss: 0.1181 - acc: 0.9556 - val_loss: 0.1305 - val_acc: 0.9523
+val_kappa: 0.7960
+Epoch 22/25
+ - 707s - loss: 0.1176 - acc: 0.9559 - val_loss: 0.1300 - val_acc: 0.9523
+val_kappa: 0.7975
+Validation Kappa has improved. Saving model.
+Epoch 23/25
+ - 705s - loss: 0.1178 - acc: 0.9558 - val_loss: 0.1303 - val_acc: 0.9523
+val_kappa: 0.7967
+Epoch 24/25
+ - 708s - loss: 0.1178 - acc: 0.9559 - val_loss: 0.1308 - val_acc: 0.9524
+val_kappa: 0.7962
+Epoch 25/25
+ - 706s - loss: 0.1179 - acc: 0.9558 - val_loss: 0.1299 - val_acc: 0.9523
+
+Epoch 00025: ReduceLROnPlateau reducing learning rate to 4.999999987376214e-08.
+val_kappa: 0.7969
+Epoch 26/50
+ - 691s - loss: 0.1172 - acc: 0.9562 - val_loss: 0.1301 - val_acc: 0.9523
+val_kappa: 0.7971
+Epoch 27/50
+ - 658s - loss: 0.1175 - acc: 0.9560 - val_loss: 0.1298 - val_acc: 0.9524
+val_kappa: 0.7983
+Validation Kappa has improved. Saving model.
+Epoch 28/50
+ - 658s - loss: 0.1170 - acc: 0.9563 - val_loss: 0.1297 - val_acc: 0.9524
+val_kappa: 0.7983
+Epoch 29/50
+ - 658s - loss: 0.1178 - acc: 0.9559 - val_loss: 0.1300 - val_acc: 0.9524
+val_kappa: 0.7979
+Epoch 30/50
+ - 658s - loss: 0.1175 - acc: 0.9558 - val_loss: 0.1302 - val_acc: 0.9525
+
+Epoch 00030: ReduceLROnPlateau reducing learning rate to 5.000000058430488e-09.
+val_kappa: 0.7982
+Epoch 31/50
+ - 658s - loss: 0.1170 - acc: 0.9561 - val_loss: 0.1299 - val_acc: 0.9524
+val_kappa: 0.7986
+Validation Kappa has improved. Saving model.
+Epoch 32/50
+ - 664s - loss: 0.1174 - acc: 0.9562 - val_loss: 0.1302 - val_acc: 0.9524
+val_kappa: 0.7972
+Epoch 33/50
+ - 667s - loss: 0.1170 - acc: 0.9558 - val_loss: 0.1300 - val_acc: 0.9523
+
+Epoch 00033: ReduceLROnPlateau reducing learning rate to 4.999999969612646e-10.
+val_kappa: 0.7963
+Epoch 34/50
+ - 667s - loss: 0.1176 - acc: 0.9554 - val_loss: 0.1299 - val_acc: 0.9524
+val_kappa: 0.7988
+Validation Kappa has improved. Saving model.
+Epoch 35/50
+ - 668s - loss: 0.1172 - acc: 0.9560 - val_loss: 0.1301 - val_acc: 0.9524
+val_kappa: 0.7968
+Epoch 36/50
+ - 667s - loss: 0.1180 - acc: 0.9557 - val_loss: 0.1302 - val_acc: 0.9525
+
+Epoch 00036: ReduceLROnPlateau reducing learning rate to 4.999999858590343e-11.
+val_kappa: 0.7976
+Epoch 37/50
+ - 667s - loss: 0.1174 - acc: 0.9560 - val_loss: 0.1302 - val_acc: 0.9525
+val_kappa: 0.7974
+Epoch 38/50
+ - 667s - loss: 0.1174 - acc: 0.9560 - val_loss: 0.1300 - val_acc: 0.9524
+val_kappa: 0.7973
+Epoch 39/50
+ - 666s - loss: 0.1180 - acc: 0.9558 - val_loss: 0.1299 - val_acc: 0.9523
+
+Epoch 00039: ReduceLROnPlateau reducing learning rate to 4.999999719812465e-12.
+val_kappa: 0.7978
+Epoch 40/50
+ - 665s - loss: 0.1168 - acc: 0.9563 - val_loss: 0.1304 - val_acc: 0.9525
+val_kappa: 0.7970
+Epoch 41/50
+ - 666s - loss: 0.1176 - acc: 0.9560 - val_loss: 0.1299 - val_acc: 0.9524
+val_kappa: 0.7985
+Epoch 42/50
+ - 666s - loss: 0.1171 - acc: 0.9562 - val_loss: 0.1299 - val_acc: 0.9525
+
+Epoch 00042: ReduceLROnPlateau reducing learning rate to 4.999999546340118e-13.
+val_kappa: 0.7983
+Epoch 43/50
+ - 666s - loss: 0.1170 - acc: 0.9565 - val_loss: 0.1301 - val_acc: 0.9524
+val_kappa: 0.7978
+Epoch 44/50
+ - 665s - loss: 0.1172 - acc: 0.9562 - val_loss: 0.1298 - val_acc: 0.9523
+val_kappa: 0.7981
+Epoch 45/50
+ - 666s - loss: 0.1172 - acc: 0.9559 - val_loss: 0.1301 - val_acc: 0.9524
+
+Epoch 00045: ReduceLROnPlateau reducing learning rate to 4.9999994379199e-14.
+val_kappa: 0.7979
+Epoch 46/50
+ - 666s - loss: 0.1172 - acc: 0.9561 - val_loss: 0.1301 - val_acc: 0.9524
+val_kappa: 0.7973
+Epoch 47/50
+ - 665s - loss: 0.1181 - acc: 0.9556 - val_loss: 0.1301 - val_acc: 0.9524
+val_kappa: 0.7980
+Epoch 48/50
+ - 666s - loss: 0.1169 - acc: 0.9562 - val_loss: 0.1303 - val_acc: 0.9524
+
+Epoch 00048: ReduceLROnPlateau reducing learning rate to 4.999999573445172e-15.
+val_kappa: 0.7975
+Epoch 49/50
+ - 656s - loss: 0.1171 - acc: 0.9563 - val_loss: 0.1298 - val_acc: 0.9524
+val_kappa: 0.7980
+Epoch 50/50
+ - 654s - loss: 0.1170 - acc: 0.9560 - val_loss: 0.1300 - val_acc: 0.9525
+val_kappa: 0.7988
