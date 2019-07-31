@@ -5,8 +5,6 @@ import pandas as pd
 from utils import save_predictions, save_probabilities
 from utils import preprocess_image
 from utils import kappa_loss, ordinal_loss, cauchy_loss, correntropy_loss
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
 
 if len(sys.argv) > 1:

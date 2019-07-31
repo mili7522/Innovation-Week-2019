@@ -1,6 +1,3 @@
-# from PIL import Image, ImageFile
-# ImageFile.LOAD_TRUNCATED_IMAGES = True
-
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint, CSVLogger, Callback
 import sys
 import os

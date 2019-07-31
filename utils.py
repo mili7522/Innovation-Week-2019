@@ -31,6 +31,7 @@ def save_summary(model_name, best_kappa, epoch = None, filename = 'models/perfor
 
 def kappa_loss(y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name = 'kappa'):
         """A continuous differentiable approximation of discrete kappa loss.
+            https://www.kaggle.com/christofhenkel/weighted-kappa-loss-for-keras-tensorflow
             Args:
                 y_pred: 2D tensor or array, [batch_size, num_classes]
                 y_true: 2D tensor or array, [batch_size, num_classes]
@@ -67,6 +68,7 @@ def kappa_loss(y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name =
             return nom / (denom + eps)
 
 def ordinal_loss(y_true, y_pred):
+    # https://github.com/JHart96/keras_ordinal_categorical_crossentropy/blob/master/ordinal_categorical_crossentropy.py
     weights = K.cast(K.abs(K.argmax(y_true, axis = 1) - K.argmax(y_pred, axis = 1))/(K.int_shape(y_pred)[1] - 1), dtype = 'float32')
     return (1.0 + weights) * losses.categorical_crossentropy(y_true, y_pred)
 
