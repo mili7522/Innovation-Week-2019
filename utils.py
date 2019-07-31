@@ -1,11 +1,13 @@
+from PIL import Image, ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 import pandas as pd
 import numpy as np
 import os
 import tensorflow as tf
 from keras import backend as K
 from keras import losses
-
-
+import math
 
 def save_predictions(predictions, filenames, save_name):
     filenames = [os.path.basename(x) for x in filenames]
@@ -26,7 +28,6 @@ def save_summary(model_name, best_kappa, epoch = None, filename = 'models/perfor
         df.loc[model_name, 'Epoch'] = epoch
     df['Epoch'] = df['Epoch'].astype(int)
     df.to_csv(filename)
-
 
 def kappa_loss(y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name = 'kappa'):
         """A continuous differentiable approximation of discrete kappa loss.
@@ -66,22 +67,56 @@ def kappa_loss(y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name =
             return nom / (denom + eps)
 
 def ordinal_loss(y_true, y_pred):
-    weights = K.cast(K.abs(K.argmax(y_true, axis=1) - K.argmax(y_pred, axis=1))/(K.int_shape(y_pred)[1] - 1), dtype='float32')
+    weights = K.cast(K.abs(K.argmax(y_true, axis = 1) - K.argmax(y_pred, axis = 1))/(K.int_shape(y_pred)[1] - 1), dtype = 'float32')
     return (1.0 + weights) * losses.categorical_crossentropy(y_true, y_pred)
-
 
 def save_probabilities(y_pred_raw, y_pred, model_name, save_name):
     pd.DataFrame(y_pred_raw).to_csv('predictions/{}_prob_{}.csv'.format(model_name, save_name), index = None)
     pd.DataFrame(y_pred).to_csv('predictions/{}_pred_{}.csv'.format(model_name, save_name), index = None, header = None)
 
-
 def correntropy_loss(y_true, y_pred, sigma = 1.5):
     diff = y_true - y_pred
     out = (1 - K.exp(-1 * K.square(diff / sigma)))  # Correntropy loss
-    return K.mean(out, axis=-1)
-
+    return K.mean(out, axis = -1)
 
 def cauchy_loss(y_true, y_pred, sigma = 1.5):
     diff = y_true - y_pred
     out = K.log(1 + K.square(diff / sigma) )  # Cauchy loss
-    return K.mean(out, axis=-1)
+    return K.mean(out, axis = -1)
+
+def crop_image(im, amount_to_crop = None):
+    w, h = im.size
+    if amount_to_crop is None:
+        amount_to_crop = abs(w - h)
+    if h < w:
+        l, r = math.floor(amount_to_crop/2), math.ceil(amount_to_crop/2)
+        im = im.crop((l, 0, w-r, h))  # (left, upper, right, lower)
+    elif w < h:
+        t, b = math.floor(amount_to_crop/2), math.ceil(amount_to_crop/2)
+        im = im.crop((0, t, w, h-b))
+    return im
+
+def pad_image(im, pad_ratio = 1):
+    w, h = im.size
+    size_diff = max(w, h) - min(w, h)
+    new_size = min(w, h) + size_diff // pad_ratio  # No need to crop first
+    new_im = Image.new('RGB', (new_size, new_size))  # Black by default
+    t = math.floor((new_size - h)/2)
+    l = math.floor((new_size - w)/2)
+    new_im.paste(im, box = (l,t))  # Upper left corner
+    return new_im
+
+def preprocess_image(image_path, fill_type = 'mix', desired_size = 299):
+    im = Image.open(image_path)
+    try:
+        if fill_type == 'crop':
+            im = crop_image(im)
+        elif fill_type == 'pad':
+            im = pad_image(im, pad_ratio = 1)
+        elif fill_type == 'mix':
+            im = pad_image(im, pad_ratio = 2)
+    except Exception as e:
+        print("Problem opening image")
+        print(e)
+    im = im.resize((desired_size, )*2, resample = Image.LANCZOS)
+    return im
