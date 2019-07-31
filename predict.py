@@ -3,7 +3,7 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-from utils import save_predictions, kappa_loss, ordinal_loss
+from utils import save_predictions, kappa_loss, ordinal_loss, save_probabilities
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
@@ -35,46 +35,50 @@ model_path = 'models'
 model_name = "{}-{:03}{}".format( model_type, model_variant, "" if repetition is None else "_r{:02}".format(repetition) )
 
 model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
+fill_type = 'mix'
 
 ### Load data
-folders = ['Train/x_mix.npy', '2015_data/Train/x_mix.npy']
-xs = [np.load(os.path.join(data_folder, folder)) for folder in folders]
-x = np.vstack(xs)
-x_test = np.load(os.path.join(data_folder, 'Test/test_x_mix.npy'))
 
-if modelClass.last_activation == "softmax":
-    folders = ['Train/y_mix.npy', '2015_data/Train/y_mix.npy']
-    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
-    y = np.vstack(ys)
-    classes = np.argmax(y, axis = 1)
-else:
-    folders = ['Train/y_multi_mix.npy', '2015_data/Train/y_multi_mix.npy']
-    ys = [np.load(os.path.join(data_folder, folder)) for folder in folders]
-    y = np.vstack(ys)
-    classes = y.astype(int).sum(axis = 1) - 1
 
-x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.2, random_state = 42, stratify = classes)
+def predict_training(folder, save_name):
+    x = np.load(os.path.join(data_folder, folder, 'x_{}.npy'.format(fill_type)))
 
-#####
-if modelClass.last_activation == "softmax":
-    y_test = model.predict(x_test, verbose = verbose)
-    y_test = np.argmax(y_test, axis = 1)
-else:
-    y_test = model.predict(x_test, verbose = verbose) > 0.5
-    y_test = y_test.astype(int).sum(axis=1) - 1
+    if modelClass.last_activation == "softmax":
+        y = np.load(os.path.join(data_folder, folder, 'y_{}.npy'.format(fill_type)))
+        classes = np.argmax(y, axis = 1)
+    else:
+        y = np.load(os.path.join(data_folder, folder, 'y_multi_{}.npy'.format(fill_type)))
+        classes = y.astype(int).sum(axis = 1) - 1
 
-file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
+    # x_train, x_val, y_train, y_val = train_test_split(x, y, test_size = 0.2, random_state = 42, stratify = classes)
 
-save_predictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
+    #####
+    if modelClass.last_activation == "softmax":
+        y_pred_raw = model.predict(x, verbose = verbose)
+        y_pred = np.argmax(y_pred_raw, axis = 1)
+    else:
+        y_pred_raw = model.predict(x, verbose = verbose)
+        y_pred = (y_pred_raw > 0.5).astype(int).sum(axis=1) - 1
+    kappa = cohen_kappa_score(classes, y_pred, weights = 'quadratic')
+    print(kappa)
+    save_probabilities(y_pred_raw, y_pred, model_name, save_name)
 
 #####
-if modelClass.last_activation == "softmax":
-    y_val = np.argmax(y_val, axis = 1)
-    y_pred = model.predict(x_val, verbose = verbose)
-    y_pred = np.argmax(y_pred, axis = 1)
-else:
-    y_val = y_val.sum(axis = 1) - 1
-    y_pred = model.predict(x_val, verbose = verbose) > 0.5
-    y_pred = y_pred.astype(int).sum(axis=1) - 1
-kappa = cohen_kappa_score(y_val, y_pred, weights = 'quadratic')
-print(kappa)
+def predict_test():
+    x_test = np.load(os.path.join(data_folder, 'Test/test_x_{}.npy'.format(fill_type)))
+    if modelClass.last_activation == "softmax":
+        y_test_raw = model.predict(x_test, verbose = verbose)
+        y_test = np.argmax(y_test_raw, axis = 1)
+    else:
+        y_test_raw = model.predict(x_test, verbose = verbose)
+        y_test = (y_test_raw > 0.5).astype(int).sum(axis=1) - 1
+    file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
+    # save_predictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
+    save_probabilities(y_test_raw, y_test, model_name, 'test')
+
+
+predict_test()
+# predict_training('Train/', 'train')
+# predict_training('2015_data/Train/', '2015_train')
+# predict_training('2015_data/Test/', '2015_test')
+# predict_training('aptos2019_data/Train/', 'aptos')
