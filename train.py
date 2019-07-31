@@ -4,7 +4,7 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-from utils import save_predictions, save_summary, kappa_loss, ordinal_loss
+from utils import save_predictions, save_summary, kappa_loss, ordinal_loss, cauchy_loss, correntropy_loss
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
@@ -153,7 +153,7 @@ model.fit_generator(
 
 
 # model.save(os.path.join(model_path, model_name) + '.h5')
-model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
+model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss, 'cauchy_loss': cauchy_loss, 'correntropy_loss': correntropy_loss})
 
 #####
 if modelClass.last_activation == "softmax":

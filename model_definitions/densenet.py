@@ -10,7 +10,7 @@ from keras.regularizers import l2
 from keras.optimizers import Adam
 import keras.backend as K
 import tensorflow as tf
-from utils import kappa_loss, ordinal_loss
+from utils import kappa_loss, ordinal_loss, correntropy_loss, cauchy_loss
 
 
 IMAGE_SIZE = 224
@@ -150,6 +150,10 @@ class DRModel():
             loss = kappa_loss
         elif self.loss == 'ordinal':
             loss = ordinal_loss
+        elif self.loss == 'correntropy':
+            loss = correntropy_loss
+        elif self.loss == 'cauchy':
+            loss = cauchy_loss
         else:
             loss = self.loss
 
@@ -245,6 +249,9 @@ def getModelVariant(variant):
         55: DRModel(loss = 'kappa', last_activation = 'softmax', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1)), optimizer_options = {'lr': 0.0001}),  # 50 with higher lr
         56: DRModel(loss = 'ordinal', last_activation = 'softmax', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1)), optimizer_options = {'lr': 0.0001}),  # 51 with higher lr
         57: DRModel(base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(preprocessing_function = preprocess_input)),  # 14 with preprocessing
+
+        58: DRModel(loss = 'correntropy', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1))),
+        59: DRModel(loss = 'cauchy', base_structure = 169, base_output_loc = 140, additional_densenet_blocks = [24, 16], base_model_trainable = False, other_datagen_options = dict(brightness_range = (0.9, 1.1))),
     }
     assert variant in switcher, "Model variant does not exist. Check the integer input"
     model = switcher[variant]

@@ -68,3 +68,20 @@ def kappa_loss(y_pred, y_true, y_pow = 2, eps = 1e-10, N = 5, bsize = 16, name =
 def ordinal_loss(y_true, y_pred):
     weights = K.cast(K.abs(K.argmax(y_true, axis=1) - K.argmax(y_pred, axis=1))/(K.int_shape(y_pred)[1] - 1), dtype='float32')
     return (1.0 + weights) * losses.categorical_crossentropy(y_true, y_pred)
+
+
+def save_probabilities(y_pred_raw, y_pred, model_name, save_name):
+    pd.DataFrame(y_pred_raw).to_csv('predictions/{}_prob_{}.csv'.format(model_name, save_name), index = None)
+    pd.DataFrame(y_pred).to_csv('predictions/{}_pred_{}.csv'.format(model_name, save_name), index = None, header = None)
+
+
+def correntropy_loss(y_true, y_pred, sigma = 1.5):
+    diff = y_true - y_pred
+    out = (1 - K.exp(-1 * K.square(diff / sigma)))  # Correntropy loss
+    return K.mean(out, axis=-1)
+
+
+def cauchy_loss(y_true, y_pred, sigma = 1.5):
+    diff = y_true - y_pred
+    out = K.log(1 + K.square(diff / sigma) )  # Cauchy loss
+    return K.mean(out, axis=-1)
