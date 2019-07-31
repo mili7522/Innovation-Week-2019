@@ -1,0 +1,49 @@
+-- Job Summary -------------------------------------------------------
+Job Id: 3581938.pbsserver for user mili7522 in queue gpu
+Job Name: t2.pbs
+Project: RDS-FEI-rc2d-RW
+Exit Status: 271
+Job run as chunks (hpc217:ncpus=8:ngpus=1:mem=41943040kb)
+Walltime requested:   15:00:00 :      Walltime used:   00:55:20
+                               :   Walltime percent:       6.1%
+-- Nodes Summary -----------------------------------------------------
+-- node hpc217 summary
+    Cpus requested:          8 :          Cpus used:       1.48
+          Cpu Time:   01:21:50 :        Cpu percent:      18.5%
+     Mem requested:     40.0GB :           Mem used:     40.0GB
+                               :        Mem percent:     100.0%
+
+-- WARNINGS ----------------------------------------------------------
+
+** Job Exit status > 256.  This indicates that the job was killed for some
+** reason, please check the following:
+**   Did the job run out of time or memory?
+**   Was the job killed for some other reason?
+** 
+** Low Walltime utilisation.  While this may be normal, it may help to check the
+** following:
+**   Did the job parameters specify more walltime than necessary? Requesting
+**   lower walltime could help your job to start sooner.
+**   Did your analysis complete as expected or did it crash before completing?
+**   Did the application run more quickly than it should have? Is this analysis
+**   the one you intended to run?
+** 
+** Low CPU utilisation on hpc217.  While this may be normal, it may help to check
+** the following:
+**   Did the job parameters specify too many cores?  Requesting fewer cores
+**   could help your job to start sooner.
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could make your job to run faster without needing any more cores.
+**   Did the application use fewer cores than it should have? Is this analysis
+**   the one you intended to run?
+**
+** Excessive Memory utilisation on hpc217. While this may be normal, it may help to
+** check the following:
+**   Did the job parameters specify enough memory?
+**   Did your analysis complete successfully, or did it run out of RAM?
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could allow your job to run using less RAM in each chunk.
+**   Did the application use more memory than it should have? Is this analysis
+**   the one you intended to run?
+**
+-- End of Job Summary ------------------------------------------------

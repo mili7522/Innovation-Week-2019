@@ -1,0 +1,406 @@
+
+======================
+Training inception-001
+======================
+
+Epoch: 0
+Folder: 2015_data/Train/299/
+Epoch 1/1
+ - 762s - loss: 0.1979 - acc: 0.9215
+val_kappa: 0.7242
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 1/1
+ - 575s - loss: 0.1690 - acc: 0.9354
+val_kappa: 0.7368
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299a/
+Epoch 1/1
+ - 572s - loss: 0.1612 - acc: 0.9380
+val_kappa: 0.7405
+Validation Kappa has improved. Predicting and saving model.
+Folder: aptos2019_data/Train/299/
+Epoch 1/1
+ - 75s - loss: 0.1311 - acc: 0.9492
+val_kappa: 0.5618
+Epoch: 1
+Folder: 2015_data/Train/299/
+Epoch 2/2
+ - 766s - loss: 0.1529 - acc: 0.9415
+val_kappa: 0.7874
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 2/2
+ - 596s - loss: 0.1460 - acc: 0.9449
+val_kappa: 0.7822
+Folder: 2015_data/Test/299a/
+Epoch 2/2
+ - 584s - loss: 0.1437 - acc: 0.9454
+val_kappa: 0.8021
+Validation Kappa has improved. Predicting and saving model.
+Folder: aptos2019_data/Train/299/
+Epoch 2/2
+ - 165s - loss: 0.1199 - acc: 0.9541
+val_kappa: 0.6067
+Epoch: 2
+Folder: 2015_data/Train/299/
+Epoch 3/3
+ - 760s - loss: 0.1401 - acc: 0.9473
+val_kappa: 0.8122
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 3/3
+ - 572s - loss: 0.1364 - acc: 0.9493
+val_kappa: 0.8093
+Folder: 2015_data/Test/299a/
+Epoch 3/3
+ - 1090s - loss: 0.1354 - acc: 0.9494
+val_kappa: 0.8020
+Folder: aptos2019_data/Train/299/
+Epoch 3/3
+ - 152s - loss: 0.1145 - acc: 0.9577
+val_kappa: 0.6372
+Epoch: 3
+Folder: 2015_data/Train/299/
+Epoch 4/4
+ - 741s - loss: 0.1302 - acc: 0.9515
+val_kappa: 0.8256
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 4/4
+ - 575s - loss: 0.1280 - acc: 0.9523
+val_kappa: 0.8207
+Folder: 2015_data/Test/299a/
+Epoch 4/4
+ - 1081s - loss: 0.1279 - acc: 0.9522
+val_kappa: 0.8159
+Folder: aptos2019_data/Train/299/
+Epoch 4/4
+ - 160s - loss: 0.1058 - acc: 0.9599
+val_kappa: 0.6487
+Epoch: 4
+Folder: 2015_data/Train/299/
+Epoch 5/5
+ - 733s - loss: 0.1253 - acc: 0.9536
+val_kappa: 0.8307
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 5/5
+ - 565s - loss: 0.1218 - acc: 0.9554
+val_kappa: 0.8334
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299a/
+Epoch 5/5
+ - 1041s - loss: 0.1213 - acc: 0.9552
+val_kappa: 0.8266
+Folder: aptos2019_data/Train/299/
+Epoch 5/5
+ - 152s - loss: 0.1009 - acc: 0.9611
+val_kappa: 0.6891
+Epoch: 5
+Folder: 2015_data/Train/299/
+Epoch 6/6
+ - 730s - loss: 0.1180 - acc: 0.9564
+val_kappa: 0.8599
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 6/6
+ - 576s - loss: 0.1166 - acc: 0.9570
+val_kappa: 0.8185
+Folder: 2015_data/Test/299a/
+Epoch 6/6
+ - 961s - loss: 0.1153 - acc: 0.9569
+val_kappa: 0.8269
+Folder: aptos2019_data/Train/299/
+Epoch 6/6
+ - 119s - loss: 0.0941 - acc: 0.9637
+val_kappa: 0.7088
+Epoch: 6
+Folder: 2015_data/Train/299/
+Epoch 7/7
+ - 746s - loss: 0.1141 - acc: 0.9578
+val_kappa: 0.8405
+Folder: 2015_data/Test/299/
+Epoch 7/7
+ - 570s - loss: 0.1114 - acc: 0.9590
+val_kappa: 0.8464
+Folder: 2015_data/Test/299a/
+Epoch 7/7
+ - 567s - loss: 0.1112 - acc: 0.9588
+val_kappa: 0.8457
+Folder: aptos2019_data/Train/299/
+Epoch 7/7
+ - 76s - loss: 0.0907 - acc: 0.9645
+val_kappa: 0.7216
+Epoch: 7
+Folder: 2015_data/Train/299/
+Epoch 8/8
+ - 759s - loss: 0.1086 - acc: 0.9600
+val_kappa: 0.8621
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 8/8
+ - 568s - loss: 0.1054 - acc: 0.9614
+val_kappa: 0.8553
+Folder: 2015_data/Test/299a/
+Epoch 8/8
+ - 646s - loss: 0.1057 - acc: 0.9613
+val_kappa: 0.8608
+Folder: aptos2019_data/Train/299/
+Epoch 8/8
+ - 78s - loss: 0.0869 - acc: 0.9652
+val_kappa: 0.7677
+Epoch: 8
+Folder: 2015_data/Train/299/
+Epoch 9/9
+ - 777s - loss: 0.1033 - acc: 0.9620
+val_kappa: 0.8686
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 9/9
+ - 566s - loss: 0.1024 - acc: 0.9623
+val_kappa: 0.8537
+Folder: 2015_data/Test/299a/
+Epoch 9/9
+ - 572s - loss: 0.1020 - acc: 0.9626
+val_kappa: 0.8612
+Folder: aptos2019_data/Train/299/
+Epoch 9/9
+ - 78s - loss: 0.0802 - acc: 0.9677
+val_kappa: 0.7807
+Epoch: 9
+Folder: 2015_data/Train/299/
+Epoch 10/10
+ - 764s - loss: 0.1003 - acc: 0.9633
+val_kappa: 0.8692
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 10/10
+ - 574s - loss: 0.0970 - acc: 0.9642
+val_kappa: 0.8740
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299a/
+Epoch 10/10
+ - 592s - loss: 0.0971 - acc: 0.9641
+val_kappa: 0.8646
+Folder: aptos2019_data/Train/299/
+Epoch 10/10
+ - 78s - loss: 0.0771 - acc: 0.9704
+val_kappa: 0.7895
+Epoch: 10
+Folder: 2015_data/Train/299/
+Epoch 11/11
+ - 753s - loss: 0.0956 - acc: 0.9648
+val_kappa: 0.8786
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 11/11
+ - 589s - loss: 0.0949 - acc: 0.9651
+val_kappa: 0.8809
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299a/
+Epoch 11/11
+ - 572s - loss: 0.0927 - acc: 0.9656
+val_kappa: 0.8772
+Folder: aptos2019_data/Train/299/
+Epoch 11/11
+ - 75s - loss: 0.0748 - acc: 0.9711
+val_kappa: 0.7791
+Epoch: 11
+Folder: 2015_data/Train/299/
+Epoch 12/12
+ - 742s - loss: 0.0915 - acc: 0.9663
+val_kappa: 0.9008
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 12/12
+ - 586s - loss: 0.0890 - acc: 0.9675
+val_kappa: 0.8841
+Folder: 2015_data/Test/299a/
+Epoch 12/12
+ - 532s - loss: 0.0896 - acc: 0.9669
+val_kappa: 0.8767
+Folder: aptos2019_data/Train/299/
+Epoch 12/12
+ - 70s - loss: 0.0683 - acc: 0.9738
+val_kappa: 0.7630
+Epoch: 12
+Folder: 2015_data/Train/299/
+Epoch 13/13
+ - 702s - loss: 0.0869 - acc: 0.9676
+val_kappa: 0.9004
+Folder: 2015_data/Test/299/
+Epoch 13/13
+ - 571s - loss: 0.0851 - acc: 0.9689
+val_kappa: 0.8823
+Folder: 2015_data/Test/299a/
+Epoch 13/13
+ - 568s - loss: 0.0865 - acc: 0.9680
+val_kappa: 0.8601
+Folder: aptos2019_data/Train/299/
+Epoch 13/13
+ - 76s - loss: 0.0661 - acc: 0.9741
+val_kappa: 0.7755
+Epoch: 13
+Folder: 2015_data/Train/299/
+Epoch 14/14
+ - 748s - loss: 0.0829 - acc: 0.9691
+val_kappa: 0.9086
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 14/14
+ - 578s - loss: 0.0802 - acc: 0.9704
+val_kappa: 0.8975
+Folder: 2015_data/Test/299a/
+Epoch 14/14
+ - 559s - loss: 0.0805 - acc: 0.9704
+val_kappa: 0.8966
+Folder: aptos2019_data/Train/299/
+Epoch 14/14
+ - 77s - loss: 0.0583 - acc: 0.9768
+val_kappa: 0.7894
+Epoch: 14
+Folder: 2015_data/Train/299/
+Epoch 15/15
+ - 743s - loss: 0.0789 - acc: 0.9711
+val_kappa: 0.9115
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 15/15
+ - 577s - loss: 0.0769 - acc: 0.9714
+val_kappa: 0.8946
+Folder: 2015_data/Test/299a/
+Epoch 15/15
+ - 567s - loss: 0.0780 - acc: 0.9708
+val_kappa: 0.8970
+Folder: aptos2019_data/Train/299/
+Epoch 15/15
+ - 77s - loss: 0.0575 - acc: 0.9789
+val_kappa: 0.7994
+Epoch: 15
+Folder: 2015_data/Train/299/
+Epoch 16/16
+ - 757s - loss: 0.0770 - acc: 0.9712
+val_kappa: 0.9072
+Folder: 2015_data/Test/299/
+Epoch 16/16
+ - 565s - loss: 0.0748 - acc: 0.9724
+val_kappa: 0.8831
+Folder: 2015_data/Test/299a/
+Epoch 16/16
+ - 564s - loss: 0.0734 - acc: 0.9725
+val_kappa: 0.8982
+Folder: aptos2019_data/Train/299/
+Epoch 16/16
+ - 73s - loss: 0.0586 - acc: 0.9768
+val_kappa: 0.7775
+Epoch: 16
+Folder: 2015_data/Train/299/
+Epoch 17/17
+ - 732s - loss: 0.0721 - acc: 0.9734
+val_kappa: 0.9260
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 17/17
+ - 562s - loss: 0.0713 - acc: 0.9732
+val_kappa: 0.9135
+Folder: 2015_data/Test/299a/
+Epoch 17/17
+ - 568s - loss: 0.0704 - acc: 0.9734
+val_kappa: 0.9006
+Folder: aptos2019_data/Train/299/
+Epoch 17/17
+ - 72s - loss: 0.0520 - acc: 0.9779
+val_kappa: 0.8301
+Epoch: 17
+Folder: 2015_data/Train/299/
+Epoch 18/18
+ - 738s - loss: 0.0688 - acc: 0.9743
+val_kappa: 0.9229
+Folder: 2015_data/Test/299/
+Epoch 18/18
+ - 566s - loss: 0.0672 - acc: 0.9752
+val_kappa: 0.9099
+Folder: 2015_data/Test/299a/
+Epoch 18/18
+ - 563s - loss: 0.0669 - acc: 0.9750
+val_kappa: 0.9068
+Folder: aptos2019_data/Train/299/
+Epoch 18/18
+ - 72s - loss: 0.0496 - acc: 0.9820
+val_kappa: 0.8006
+Epoch: 18
+Folder: 2015_data/Train/299/
+Epoch 19/19
+ - 675s - loss: 0.0647 - acc: 0.9758
+val_kappa: 0.9240
+Folder: 2015_data/Test/299/
+Epoch 19/19
+ - 536s - loss: 0.0635 - acc: 0.9761
+val_kappa: 0.9196
+Folder: 2015_data/Test/299a/
+Epoch 19/19
+ - 563s - loss: 0.0628 - acc: 0.9764
+val_kappa: 0.9118
+Folder: aptos2019_data/Train/299/
+Epoch 19/19
+ - 74s - loss: 0.0514 - acc: 0.9798
+val_kappa: 0.8065
+Epoch: 19
+Folder: 2015_data/Train/299/
+Epoch 20/20
+ - 738s - loss: 0.0615 - acc: 0.9766
+val_kappa: 0.9273
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 20/20
+ - 570s - loss: 0.0607 - acc: 0.9769
+val_kappa: 0.9079
+Folder: 2015_data/Test/299a/
+Epoch 20/20
+ - 562s - loss: 0.0611 - acc: 0.9771
+val_kappa: 0.9087
+Folder: aptos2019_data/Train/299/
+Epoch 20/20
+ - 75s - loss: 0.0458 - acc: 0.9818
+val_kappa: 0.8140
+Epoch: 20
+Folder: 2015_data/Train/299/
+Epoch 21/21
+ - 730s - loss: 0.0598 - acc: 0.9774
+val_kappa: 0.9273
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 21/21
+ - 567s - loss: 0.0575 - acc: 0.9784
+val_kappa: 0.9225
+Folder: 2015_data/Test/299a/
+Epoch 21/21
+ - 555s - loss: 0.0583 - acc: 0.9778
+val_kappa: 0.9204
+Folder: aptos2019_data/Train/299/
+Epoch 21/21
+ - 73s - loss: 0.0402 - acc: 0.9844
+val_kappa: 0.8424
+Epoch: 21
+Folder: 2015_data/Train/299/
+Epoch 22/22
+ - 785s - loss: 0.0567 - acc: 0.9787
+val_kappa: 0.9293
+Validation Kappa has improved. Predicting and saving model.
+Folder: 2015_data/Test/299/
+Epoch 22/22
+ - 562s - loss: 0.0555 - acc: 0.9792
+val_kappa: 0.9236
+Folder: 2015_data/Test/299a/
+Epoch 22/22
+ - 576s - loss: 0.0541 - acc: 0.9794
+val_kappa: 0.9228
+Folder: aptos2019_data/Train/299/
+Epoch 22/22
+ - 72s - loss: 0.0415 - acc: 0.9853
+val_kappa: 0.8262
+Epoch: 22
+Folder: 2015_data/Train/299/
+Epoch 23/23
+ - 736s - loss: 0.0545 - acc: 0.9796

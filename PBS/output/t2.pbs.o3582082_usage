@@ -1,0 +1,50 @@
+-- Job Summary -------------------------------------------------------
+Job Id: 3582082.pbsserver for user mili7522 in queue gpu
+Job Name: t2.pbs
+Project: RDS-FEI-InfoDynFuncStruct-RW
+Exit Status: 271
+Job run as chunks (hpc219:ncpus=8:ngpus=1:mem=20971520kb)
+Walltime requested:   15:00:00 :      Walltime used:   15:00:11
+                               :   Walltime percent:     100.0%
+-- Nodes Summary -----------------------------------------------------
+-- node hpc219 summary
+    Cpus requested:          8 :          Cpus used:       1.70
+          Cpu Time:   25:31:13 :        Cpu percent:      21.3%
+     Mem requested:     20.0GB :           Mem used:     20.0GB
+                               :        Mem percent:     100.0%
+
+-- WARNINGS ----------------------------------------------------------
+
+** Job Exit status > 256.  This indicates that the job was killed for some
+** reason, please check the following:
+**   Did the job run out of time or memory?
+**   Was the job killed for some other reason?
+** 
+** Excessive Walltime utilisation.  While this may be normal, it may help to
+** check the following:
+**   Did the job parameters specify enough walltime?
+**   Did your analysis complete successfully, or did it run out of time?
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could allow your job to run faster.
+**   Did the application run more slowly than it should have? Is this analysis
+**   the one you intended to run?
+** 
+** Low CPU utilisation on hpc219.  While this may be normal, it may help to check
+** the following:
+**   Did the job parameters specify too many cores?  Requesting fewer cores
+**   could help your job to start sooner.
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could make your job to run faster without needing any more cores.
+**   Did the application use fewer cores than it should have? Is this analysis
+**   the one you intended to run?
+**
+** Excessive Memory utilisation on hpc219. While this may be normal, it may help to
+** check the following:
+**   Did the job parameters specify enough memory?
+**   Did your analysis complete successfully, or did it run out of RAM?
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could allow your job to run using less RAM in each chunk.
+**   Did the application use more memory than it should have? Is this analysis
+**   the one you intended to run?
+**
+-- End of Job Summary ------------------------------------------------
