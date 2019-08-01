@@ -18,7 +18,7 @@ else:
 
 
 model_path = '.'
-model_name = 'DCNet.h5'  # Name of the model file to load
+model_name = 'DRNet.h5'  # Name of the model file to load
 model = load_model(os.path.join(model_path, model_name), custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss, 'cauchy_loss': cauchy_loss, 'correntropy_loss': correntropy_loss})
 
 fill_type = 'mix'  # Fill type for image proprocessing. 'crop, 'pad', or 'mix'

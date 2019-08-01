@@ -26,7 +26,7 @@ else:
 model_script = 'model_definitions.{}'.format(model_type)
 modelDefinition = importlib.import_module(model_script)
 modelClass = modelDefinition.getModelVariant(model_variant)
-# model = modelClass.build_model()
+model = modelClass.build_model()
 
 
 if os.path.exists('/media/mike/Files/'):
@@ -44,7 +44,6 @@ print("\n======================")
 print("Training", model_name, flush = True)
 print("======================\n")
 
-model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss, 'cauchy_loss': cauchy_loss, 'correntropy_loss': correntropy_loss})
 
 # training_examples = 11314
 # validation_examples = 2831
@@ -98,7 +97,6 @@ def load_and_train(folder):
                         workers = 1,
                         verbose = verbose
                        )
-    # return train_generator, STEP_SIZE_TRAIN
 
 # Load val data
 X_val = np.load(os.path.join(data_folder, val_folder + 'x_{}.npy'.format(fill_type)), mmap_mode = 'r')
@@ -116,7 +114,7 @@ os.makedirs('predictions', exist_ok = True)
 
 ###
 # best_kappa = -np.inf
-best_kappa = 0.79268179766734
+best_kappa = 0.805773471107156
 val_kappas = []
 best_kappa_epoch = None
 class Metrics(Callback):
@@ -172,22 +170,10 @@ kappa_metrics = Metrics()
 callbacks_list = [logger, reduce_lr, kappa_metrics]
 # callbacks_list = [logger, reduce_lr]
 
-for i in range(2, EPOCHS):
+for i in range(EPOCHS):
     print("Epoch:", i)
     for folder in train_folders:
         print("Folder:", folder)
-        # train_generator, STEP_SIZE_TRAIN = load_train_data(folder)
-        # model.fit_generator(
-        #                     train_generator,
-        #                     steps_per_epoch = STEP_SIZE_TRAIN,
-        #                     initial_epoch = i,
-        #                     epochs = i + 1,
-        #                     callbacks = callbacks_list,
-        #                     class_weight = modelClass.class_weight,
-        #                     workers = 4,
-        #                     verbose = verbose
-        #                    )
-        # del train_generator
         load_and_train(folder)
 
     if i == EPOCHS // 4:
@@ -196,7 +182,7 @@ for i in range(2, EPOCHS):
 
 
 # model.save(os.path.join(model_path, model_name) + '.h5')
-# model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
+# model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss, 'cauchy_loss': cauchy_loss, 'correntropy_loss': correntropy_loss})
 
 #####
 save_summary(model_name, best_kappa = best_kappa, epoch = best_kappa_epoch, filename = 'models/performance.csv')

@@ -3,7 +3,7 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-from utils import save_predictions, kappa_loss, ordinal_loss, save_probabilities
+from utils import save_predictions, save_probabilities, kappa_loss, ordinal_loss, cauchy_loss, correntropy_loss
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import cohen_kappa_score
 from keras.models import load_model
@@ -34,13 +34,13 @@ else:
 model_path = 'models'
 model_name = "{}-{:03}{}".format( model_type, model_variant, "" if repetition is None else "_r{:02}".format(repetition) )
 
-model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
+model = load_model(os.path.join(model_path, model_name) + '_best.h5', custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss, 'cauchy_loss': cauchy_loss, 'correntropy_loss': correntropy_loss})
 fill_type = 'mix'
 
 ### Load data
 
 
-def predict_training(folder, save_name):
+def predict_training(folder, save_name, save = True):
     x = np.load(os.path.join(data_folder, folder, 'x_{}.npy'.format(fill_type)))
 
     if modelClass.last_activation == "softmax":
@@ -61,7 +61,8 @@ def predict_training(folder, save_name):
         y_pred = (y_pred_raw > 0.5).astype(int).sum(axis=1) - 1
     kappa = cohen_kappa_score(classes, y_pred, weights = 'quadratic')
     print(kappa)
-    save_probabilities(y_pred_raw, y_pred, model_name, save_name)
+    if save:
+        save_probabilities(y_pred_raw, y_pred, model_name, save_name)
 
 #####
 def predict_test():
@@ -77,8 +78,13 @@ def predict_test():
     save_probabilities(y_test_raw, y_test, model_name, 'test')
 
 
-predict_test()
+# predict_test()
 # predict_training('Train/', 'train')
 # predict_training('2015_data/Train/', '2015_train')
 # predict_training('2015_data/Test/', '2015_test')
 # predict_training('aptos2019_data/Train/', 'aptos')
+predict_training('Train/299/', 'train')
+predict_training('2015_data/Train/299/', '2015_train')
+predict_training('2015_data/Test/299/', '2015_test')
+predict_training('2015_data/Test/299a/', '2015_test')
+predict_training('aptos2019_data/Train/299/', 'aptos')

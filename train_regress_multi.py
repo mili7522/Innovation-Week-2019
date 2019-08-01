@@ -92,17 +92,6 @@ x_train, x_val, y_train, y_val = train_test_split(x, classes, test_size = 0.2, r
 # x_val, x_train, y_val, y_train = train_test_split(x, classes, test_size = 0.2, random_state = 42, stratify = classes)
 
 
-# train_datagen = ImageDataGenerator(zoom_range = 0.15,  # set range for random zoom
-#                                    horizontal_flip = True,
-#                                    vertical_flip = True,
-#                                    # set mode for filling points outside the input boundaries
-#                                    fill_mode = 'constant',
-#                                    cval = 0.,  # value used for fill_mode = "constant",
-#                                    brightness_range = (0.9, 1.1)
-#                                   )
-
-
-# train_generator = train_datagen.flow(x_train, classes, batch_size = BATCH_SIZE)
 
 def acc2(y_true, y_pred):  # Same as built in accuracy metric
     y_pred = K.round(y_pred)
@@ -129,40 +118,6 @@ def build_model():
 
 model = build_model()
 
-# class Model:
-#     @staticmethod
-#     def loadmodel(self, path):
-#         return load_model(path, custom_objects = {'kappa_loss': kappa_loss, 'ordinal_loss': ordinal_loss})
-
-#     def __init__(self, path):
-#        self.model = self.loadmodel(path)
-#        self.graph = tf.get_default_graph()
-
-#     def predict(self, X):
-#         with self.graph.as_default():
-#             return self.model.predict(X)
-
-# model_binary = Model(os.path.join(model_path, 'densenet-046_best.h5'))
-# model_kappa = Model(os.path.join(model_path, 'densenet-050_best.h5'))
-# model_ordinal = Model(os.path.join(model_path, 'densenet-051_best.h5'))
-
-# model_binary = load_model(os.path.join(model_path, 'densenet-046_best.h5'))
-# model_kappa = load_model(os.path.join(model_path, 'densenet-050_best.h5'), custom_objects = {'kappa_loss': kappa_loss})
-# model_ordinal = load_model(os.path.join(model_path, 'densenet-051_best.h5'), custom_objects = {'ordinal_loss': ordinal_loss})
-
-# def data_generator():
-#     while True:
-#         Xi, Yi = train_generator.next()
-#         Xi = Xi.astype(np.uint8)
-#         x_binary = model_binary.predict(Xi)
-#         x_kappa = model_kappa.predict(Xi)
-#         x_ordinal = model_ordinal.predict(Xi)
-#         x_binary_y = (x_binary > 0.5).astype(int).sum(axis = 1) - 1
-#         x_kappa_y = np.argmax(x_kappa, axis = 1)
-#         x_ordinal_y = np.argmax(x_ordinal, axis = 1)
-
-#         X = np.hstack([x_binary, x_kappa, x_ordinal, x_binary_y, x_kappa_y, x_ordinal_y])
-#         yield Xi, Yi
 
 ###
 checkpoint = ModelCheckpoint(os.path.join(model_path, model_name) + '_best.h5', save_best_only = True)
@@ -172,16 +127,14 @@ reduce_lr = ReduceLROnPlateau(monitor = 'val_loss', factor = 0.5, patience = 3, 
 callbacks_list = [logger, reduce_lr, checkpoint]
 
 STEP_SIZE_TRAIN = x_train.shape[0] // BATCH_SIZE
-# Two stage training
+
 model.fit(
           x_train, y_train,
-        #   steps_per_epoch = STEP_SIZE_TRAIN,
           batch_size = BATCH_SIZE,
           epochs = EPOCHS,
           validation_data = (x_val, y_val),
           callbacks = callbacks_list,
           class_weight = None,
-        #   workers = 1,
           verbose = verbose
           )
 
@@ -191,10 +144,10 @@ model = load_model(os.path.join(model_path, model_name) + '_best.h5')
 
 
 #####
-#y_test = model.predict(x_test, verbose = (verbose - 2) * -1 )
-#y_test = np.round(np.clip(y_test, 0, 4)).astype(int).ravel()
+y_test = model.predict(x_test, verbose = (verbose - 2) * -1 )
+y_test = np.round(np.clip(y_test, 0, 4)).astype(int).ravel()
 
-#file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
+file_list = pd.read_csv(os.path.join(data_folder, 'Test/test_files.csv'), header = None, squeeze = True).values
 
-#os.makedirs('predictions', exist_ok = True)
-#save_predictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
+os.makedirs('predictions', exist_ok = True)
+save_predictions(y_test, file_list, save_name = 'predictions/{}.csv'.format(model_name))
