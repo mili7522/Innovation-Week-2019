@@ -23,7 +23,7 @@ model = load_model(os.path.join(model_path, model_name), custom_objects = {'kapp
 
 fill_type = 'mix'  # Fill type for image proprocessing. 'crop, 'pad', or 'mix'
 softmax_activation = False  # If True, softmax activation was used for the output layer, otherwise sigmoid was used
-im_size = 299  # 299 for inception style networks, 244 for densenet style networks
+im_size = 224  # 299 for inception style networks, 224 for densenet style networks
 
 ### Load data
 try:
