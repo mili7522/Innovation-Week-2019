@@ -25,6 +25,7 @@ fill_type = 'mix'  # Fill type for image proprocessing. 'crop, 'pad', or 'mix'
 softmax_activation = False  # If True, softmax activation was used for the output layer, otherwise sigmoid was used
 im_size = 224  # 299 for inception style networks, 224 for densenet style networks
 
+
 ### Load data
 try:
     files = pd.read_csv(output_csv).iloc[:,0].values
